@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMS | Jungle's Sonic Architect</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="RMS - Jungle DJ & Producer. Official website for music, merch, sample packs, dub packs, and tour dates.">
+    <meta name="keywords" content="RMS, Jungle, Drum and Bass, DnB, Producer, DJ, Sample Packs, Dub Packs, Breaks">
+    <meta name="author" content="RMS">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="RMS | Jungle's Sonic Architect">
+    <meta property="og:description" content="Official website for music, merch, sample packs, and tour dates.">
+    <meta property="og:image" content="images/rms-social-share.jpg">
+    <meta property="og:url" content="https://www.rmsmusic.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           CSS VARIABLES - DARK MODE
+           Black, Gray, Silver, White
+           ============================================ */
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #111111;
+            --bg-card: #0d0d0d;
+            
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #555555;
+            
+            --accent-primary: #ffffff;
+            --accent-secondary: #b0b0b0;
+            --accent-glow: rgba(255, 255, 255, 0.25);
+            
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.4s ease;
+        }
+
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-fast);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--spacing-sm) var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.25em;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition-medium);
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .nav-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 28px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition-fast);
+        }
+
+        .nav-toggle:hover span {
+            background: var(--accent-secondary);
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ============================================
+           NAVIGATION OVERLAY
+           ============================================ */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-medium);
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-menu {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .nav-menu li {
+            overflow: hidden;
+        }
+
+        .nav-menu a {
+            display: block;
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            padding: 0.6rem var(--spacing-md);
+            color: var(--text-primary);
+            transform: translateY(100%);
+            transition: var(--transition-medium);
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .nav-overlay.active .nav-menu a {
+            transform: translateY(0);
+        }
+
+        .nav-menu li:nth-child(1) a { transition-delay: 0.03s; }
+        .nav-menu li:nth-child(2) a { transition-delay: 0.06s; }
+        .nav-menu li:nth-child(3) a { transition-delay: 0.09s; }
+        .nav-menu li:nth-child(4) a { transition-delay: 0.12s; }
+        .nav-menu li:nth-child(5) a { transition-delay: 0.15s; }
+        .nav-menu li:nth-child(6) a { transition-delay: 0.18s; }
+        .nav-menu li:nth-child(7) a { transition-delay: 0.21s; }
+        .nav-menu li:nth-child(8) a { transition-delay: 0.24s; }
+        .nav-menu li:nth-child(9) a { transition-delay: 0.27s; }
+        .nav-menu li:nth-child(10) a { transition-delay: 0.30s; }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0.3rem;
+            transform: translateX(-50%) scaleX(0);
+            width: 50%;
+            height: 1px;
+            background: var(--text-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .nav-menu a:hover::before {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-tag {
+            font-size: 0.45rem;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 0.15rem 0.4rem;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-social {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+        }
+
+        .nav-social a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            transition: var(--transition-fast);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .nav-overlay.active .nav-social a {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.35s;
+        }
+
+        .nav-social a:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: var(--spacing-md);
+            overflow: hidden;
+        }
+
+        #heroCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, var(--bg-primary) 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(5rem, 18vw, 14rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            margin-left: 0.15em;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+            text-shadow: 0 0 80px var(--accent-glow);
+            animation: titlePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { 
+                text-shadow: 0 0 60px rgba(255,255,255,0.2);
+                opacity: 1;
+            }
+            50% { 
+                text-shadow: 0 0 100px rgba(255,255,255,0.35);
+                opacity: 0.95;
+            }
+        }
+
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+            font-weight: 300;
+            letter-spacing: 0.4em;
+            margin-left: 0.4em;
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-lg);
+            text-transform: uppercase;
+        }
+
+        .hero-cta {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition-medium);
+            text-transform: uppercase;
+        }
+
+        .hero-cta:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: var(--spacing-md);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            width: 1px;
+            height: 35px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+        }
+
+        /* ============================================
+           SECTIONS
+           ============================================ */
+        .section {
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--text-primary), transparent);
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            margin-top: var(--spacing-sm);
+        }
+
+        /* ============================================
+           MUSIC GRID
+           ============================================ */
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .release-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: var(--transition-medium);
+            cursor: pointer;
+        }
+
+        .release-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .release-artwork {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #080808 0%, #151515 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .release-artwork img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-medium);
+        }
+
+        .release-card:hover .release-artwork img {
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition-medium);
+        }
+
+        .play-overlay span {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+        }
+
+        .release-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .release-info {
+            padding: var(--spacing-sm);
+        }
+
+        .release-title {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.2rem;
+        }
+
+        .release-meta {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .release-platforms {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .platform-link {
+            padding: 0.2rem 0.6rem;
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-secondary);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            transition: var(--transition-fast);
+        }
+
+        .platform-link:hover {
+            background: var(--text-primary);
+            border-color: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        .price-tag {
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        /* ============================================
+           VIDEOS GRID
+           ============================================ */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .video-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: var(--transition-medium);
+        }
+
+        .video-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .video-embed {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--bg-tertiary);
+        }
+
+        .video-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #080808 0%, #151515 100%);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .video-placeholder .play-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-secondary);
+        }
+
+        .video-info {
+            padding: var(--spacing-sm);
+        }
+
+        .video-title {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.2rem;
+        }
+
+        .video-meta {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* ============================================
+           GIGS LIST
+           ============================================ */
+        .gigs-list {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .gig-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 2px solid var(--text-muted);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-md);
+            transition: var(--transition-medium);
+        }
+
+        .gig-card:hover {
+            background: var(--bg-tertiary);
+            border-left-color: var(--text-primary);
+            transform: translateX(8px);
+        }
+
+        .gig-date {
+            flex-shrink: 0;
+            text-align: center;
+            padding-right: var(--spacing-md);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            min-width: 70px;
+        }
+
+        .gig-day {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .gig-month {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .gig-details {
+            flex: 1;
+        }
+
+        .gig-venue {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .gig-location {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .gig-support {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 0.2rem;
+        }
+
+        .gig-ticket {
+            padding: 0.6rem 1.2rem;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+
+        .gig-ticket:hover {
+            background: var(--accent-secondary);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .gig-ticket.sold-out {
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .gig-ticket.play-btn {
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        .gig-ticket.play-btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        /* ============================================
+           DUB PACKS SECTION
+           ============================================ */
+        .dubs-intro {
+            max-width: 700px;
+            margin: 0 auto var(--spacing-lg);
+            text-align: center;
+        }
+
+        .dubs-intro p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .dubs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .dub-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: var(--spacing-md);
+            transition: var(--transition-medium);
+        }
+
+        .dub-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .dub-card.featured {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+        }
+
+        .dub-card.featured::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--text-primary), transparent);
+        }
+
+        .dub-header {
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .dub-badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            font-size: 0.55rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .dub-badge.monthly {
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        .dub-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .dub-subtitle {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .dub-price {
+            margin: var(--spacing-sm) 0;
+        }
+
+        .dub-price-amount {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        .dub-price-period {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .dub-features {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .dub-features li {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            padding: 0.4rem 0;
+            padding-left: 1.3rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .dub-features li:last-child {
+            border-bottom: none;
+        }
+
+        .dub-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--text-primary);
+            font-size: 0.7rem;
+        }
+
+        .dub-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--text-primary);
+            border: none;
+            color: var(--bg-primary);
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dub-btn:hover {
+            background: var(--accent-secondary);
+        }
+
+        .dub-btn.outline {
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        .dub-btn.outline:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        .dub-releases {
+            margin-top: var(--spacing-xl);
+        }
+
+        .dub-releases-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .dub-releases-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .dub-releases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .dub-release-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            transition: var(--transition-medium);
+        }
+
+        .dub-release-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .dub-release-artwork {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #080808 0%, #121212 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .dub-release-exclusive {
+            position: absolute;
+            top: var(--spacing-xs);
+            right: var(--spacing-xs);
+            padding: 0.15rem 0.4rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            font-size: 0.5rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .dub-release-info {
+            padding: var(--spacing-sm);
+        }
+
+        .dub-release-title {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .dub-release-meta {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .dub-release-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dub-release-price span {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .dub-release-buy {
+            padding: 0.35rem 0.7rem;
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            font-size: 0.6rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+
+        .dub-release-buy:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        /* ============================================
+           SAMPLE PACKS
+           ============================================ */
+        .packs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .pack-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--spacing-md);
+            transition: var(--transition-medium);
+        }
+
+        .pack-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .pack-header {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .pack-badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            font-size: 0.55rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .pack-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .pack-desc {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.6;
+        }
+
+        .pack-preview {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .pack-preview audio {
+            width: 100%;
+            height: 38px;
+            filter: grayscale(100%);
+        }
+
+        .pack-features {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .pack-features li {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .pack-features li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .pack-price {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .pack-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .pack-btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        /* ============================================
+           ABOUT SECTION
+           ============================================ */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: start;
+        }
+
+        .about-image img {
+            width: 100%;
+            filter: grayscale(100%);
+            transition: var(--transition-medium);
+        }
+
+        .about-image:hover img {
+            filter: grayscale(50%);
+        }
+
+        .about-bio {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.9rem;
+        }
+
+        .about-bio p {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .about-bio strong {
+            color: var(--text-primary);
+        }
+
+        .about-stats {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .stat-item {
+            padding: var(--spacing-xs) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            min-width: 70px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .press-kit-btn {
+            display: inline-block;
+            margin-top: var(--spacing-md);
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .press-kit-btn:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        /* ============================================
+           CONTACT SECTION
+           ============================================ */
+        .contact-container {
+            max-width: 850px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 0.9rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--text-primary);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .form-submit {
+            padding: 0.9rem 1.5rem;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border: none;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .form-submit:hover {
+            background: var(--accent-secondary);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .info-item {
+            padding: var(--spacing-sm);
+            background: var(--bg-card);
+            border-left: 2px solid var(--text-muted);
+        }
+
+        .info-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.2rem;
+        }
+
+        .info-value {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .info-value a {
+            color: var(--text-primary);
+        }
+
+        .info-value a:hover {
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* ============================================
+           AUDIO PLAYER
+           ============================================ */
+        .audio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, #080808 0%, #000000 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 180px;
+        }
+
+        .player-artwork {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            overflow: hidden;
+        }
+
+        .player-artwork img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .player-details h4 {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .player-details p {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-btn {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 0.9rem;
+        }
+
+        .player-btn:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        .player-btn.play {
+            width: 48px;
+            height: 48px;
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .player-btn.play:hover,
+        .player-btn.play.playing {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        .player-progress-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 180px;
+        }
+
+        .player-progress {
+            height: 4px;
+            background: var(--bg-tertiary);
+            cursor: pointer;
+        }
+
+        .player-progress-bar {
+            height: 100%;
+            background: var(--text-primary);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .player-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+        }
+
+        .player-volume {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 100px;
+        }
+
+        .player-volume-icon {
+            color: var(--text-muted);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .player-volume-icon:hover {
+            color: var(--text-primary);
+        }
+
+        .player-volume-slider {
+            flex: 1;
+            height: 4px;
+            background: var(--bg-tertiary);
+            cursor: pointer;
+        }
+
+        .player-volume-level {
+            height: 100%;
+            background: var(--text-secondary);
+            width: 70%;
+        }
+
+        .player-extra {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .player-extra-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-size: 0.8rem;
+        }
+
+        .player-extra-btn:hover,
+        .player-extra-btn.active {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--bg-secondary);
+            padding: var(--spacing-lg) var(--spacing-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            margin-top: var(--spacing-xl);
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 0.25em;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            transition: var(--transition-fast);
+        }
+
+        .footer-social a:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 900px) {
+            .audio-player {
+                flex-wrap: wrap;
+                padding: 10px 15px;
+                gap: 12px;
+            }
+            
+            .player-progress-container {
+                order: -1;
+                width: 100%;
+            }
+            
+            .player-volume,
+            .player-extra {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                max-width: 280px;
+                margin: 0 auto;
+            }
+            
+            .gig-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .gig-date {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                padding-right: 0;
+                padding-bottom: var(--spacing-sm);
+                margin-bottom: var(--spacing-sm);
+                width: 100%;
+                display: flex;
+                gap: var(--spacing-sm);
+                align-items: baseline;
+            }
+            
+            .gig-ticket {
+                width: 100%;
+                text-align: center;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .section {
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            body {
+                padding-bottom: 120px;
+            }
+            
+            .music-grid,
+            .packs-grid,
+            .dubs-grid,
+            .dub-releases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                letter-spacing: 0.1em;
+                margin-left: 0.1em;
+            }
+
+            .hero-tagline {
+                letter-spacing: 0.2em;
+                margin-left: 0.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <a href="#home" class="logo" id="logoLink">RMS</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="nav-overlay" id="navOverlay">
+        <ul class="nav-menu">
+            <li><a href="#home" class="nav-link" data-page="home">Home</a></li>
+            <li><a href="#music" class="nav-link" data-page="music">Music</a></li>
+            <li><a href="#videos" class="nav-link" data-page="videos">Videos</a></li>
+            <li><a href="#gigs" class="nav-link" data-page="gigs">Gigs</a></li>
+            <li><a href="#dubs" class="nav-link" data-page="dubs">Dub Packs <span class="nav-tag">Exclusive</span></a></li>
+            <li><a href="#samples" class="nav-link" data-page="samples">Sample Packs</a></li>
+            <li><a href="#merch" class="nav-link" data-page="merch">Merch</a></li>
+            <li><a href="#mixes" class="nav-link" data-page="mixes">Mixes</a></li>
+            <li><a href="#about" class="nav-link" data-page="about">About</a></li>
+            <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+        </ul>
+        <div class="nav-social">
+            <a href="#" target="_blank">SC</a>
+            <a href="#" target="_blank">IG</a>
+            <a href="#" target="_blank">YT</a>
+            <a href="#" target="_blank">BC</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <canvas id="heroCanvas"></canvas>
+        <div class="hero-content">
+            <h1 class="hero-title">RMS</h1>
+            <p class="hero-tagline">Jungle's Sonic Architect</p>
+            <a href="#music" class="hero-cta" data-page="music">Enter the Frequency</a>
+        </div>
+        <div class="scroll-indicator"><span>Scroll</span></div>
+    </section>
+
+    <!-- MUSIC -->
+    <section class="section page-section" id="music" style="display: none;">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Releases</h2>
+            <p class="section-subtitle">Latest drops from the archives</p>
+        </div>
+        <div class="music-grid">
+            <div class="release-card fade-in" data-track-index="0">
+                <div class="release-artwork"><div class="play-overlay"><span>▶</span></div>CONCRETE JUNGLE EP</div>
+                <div class="release-info">
+                    <h3 class="release-title">Concrete Jungle EP</h3>
+                    <p class="release-meta">2024 • 4 Tracks</p>
+                    <div class="release-platforms">
+                        <a href="#" class="platform-link">Spotify</a>
+                        <a href="#" class="platform-link">Bandcamp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="release-card fade-in" data-track-index="1">
+                <div class="release-artwork"><div class="play-overlay"><span>▶</span></div>URBAN WARFARE</div>
+                <div class="release-info">
+                    <h3 class="release-title">Urban Warfare</h3>
+                    <p class="release-meta">2024 • Single</p>
+                    <div class="release-platforms">
+                        <a href="#" class="platform-link">Spotify</a>
+                        <a href="#" class="platform-link">SoundCloud</a>
+                    </div>
+                </div>
+            </div>
+            <div class="release-card fade-in" data-track-index="2">
+                <div class="release-artwork"><div class="play-overlay"><span>▶</span></div>BREAKPOINT</div>
+                <div class="release-info">
+                    <h3 class="release-title">Breakpoint</h3>
+                    <p class="release-meta">2023 • Album</p>
+                    <div class="release-platforms">
+                        <a href="#" class="platform-link">Spotify</a>
+                        <a href="#" class="platform-link">Beatport</a>
+                    </div>
+                </div>
+            </div>
+            <div class="release-card fade-in" data-track-index="3">
+                <div class="release-artwork"><div class="play-overlay"><span>▶</span></div>AMEN PROPHECY</div>
+                <div class="release-info">
+                    <h3 class="release-title">Amen Prophecy</h3>
+                    <p class="release-meta">2023 • Single</p>
+                    <div class="release-platforms">
+                        <a href="#" class="platform-link">Spotify</a>
+                    </div>
+                </div>
+            </div>
+            <div class="release-card fade-in" data-track-index="4">
+                <div class="release-artwork"><div class="play-overlay"><span>▶</span></div>BASS CULTURE</div>
+                <div class="release-info">
+                    <h3 class="release-title">Bass Culture EP</h3>
+                    <p class="release-meta">2023 • 3 Tracks</p>
+                    <div class="release-platforms">
+                        <a href="#" class="platform-link">Bandcamp</a>
+                    </div>
+                </div>
+            </div>
+            <div class="release-card fade-in" data-track-index="5">
+                <div class="release-artwork"><div class="play-overlay"><span>▶</span></div>REWIND SELECTOR</div>
+                <div class="release-info">
+                    <h3 class="release-title">Rewind Selector</h3>
+                    <p class="release-meta">2022 • Single</p>
+                    <div class="release-platforms">
+                        <a href="#" class="platform-link">SoundCloud</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEOS -->
+    <section class="section page-section" id="videos" style="display: none; background: var(--bg-secondary);">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Videos</h2>
+            <p class="section-subtitle">Visuals from the studio and stage</p>
+        </div>
+        <div class="videos-grid">
+            <div class="video-card fade-in">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/AZRu_XfN4e8" title="Video" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">RMS - Live @ TorontoJungle HQ</h3>
+                    <p class="video-meta">Live Stream • 2026</p>
+                </div>
+            </div>
+            <div class="video-card fade-in">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Video" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Studio Session 001</h3>
+                    <p class="video-meta">Behind The Scenes • 2024</p>
+                </div>
+            </div>
+            <div class="video-card fade-in">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Video" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Fabric London Live Set</h3>
+                    <p class="video-meta">Live Performance • 2023</p>
+                </div>
+            </div>
+            <div class="video-card fade-in">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Video" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Making of Breakpoint</h3>
+                    <p class="video-meta">Documentary • 2023</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIGS -->
+    <section class="section page-section" id="gigs" style="display: none;">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Upcoming Gigs</h2>
+            <p class="section-subtitle">Catch me live</p>
+        </div>
+        <div class="gigs-list">
+            <div class="gig-card fade-in">
+                <div class="gig-date"><div class="gig-day">22</div><div class="gig-month">FEB</div></div>
+                <div class="gig-details">
+                    <h3 class="gig-venue">Fabric</h3>
+                    <p class="gig-location">London, UK</p>
+                    <p class="gig-support">Support: Doc Scott, Storm</p>
+                </div>
+                <a href="#" class="gig-ticket">Tickets</a>
+            </div>
+            <div class="gig-card fade-in">
+                <div class="gig-date"><div class="gig-day">08</div><div class="gig-month">MAR</div></div>
+                <div class="gig-details">
+                    <h3 class="gig-venue">Motion</h3>
+                    <p class="gig-location">Bristol, UK</p>
+                    <p class="gig-support">Support: Breakage, Response</p>
+                </div>
+                <a href="#" class="gig-ticket">Tickets</a>
+            </div>
+            <div class="gig-card fade-in">
+                <div class="gig-date"><div class="gig-day">15</div><div class="gig-month">MAR</div></div>
+                <div class="gig-details">
+                    <h3 class="gig-venue">Warehouse Project</h3>
+                    <p class="gig-location">Manchester, UK</p>
+                    <p class="gig-support">Support: Randall, Benny L</p>
+                </div>
+                <span class="gig-ticket sold-out">Sold Out</span>
+            </div>
+            <div class="gig-card fade-in">
+                <div class="gig-date"><div class="gig-day">29</div><div class="gig-month">MAR</div></div>
+                <div class="gig-details">
+                    <h3 class="gig-venue">Bassiani</h3>
+                    <p class="gig-location">Tbilisi, Georgia</p>
+                    <p class="gig-support">Support: Local selectors</p>
+                </div>
+                <a href="#" class="gig-ticket">Tickets</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- DUB PACKS -->
+    <section class="section page-section" id="dubs" style="display: none; background: var(--bg-secondary);">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Dub Packs</h2>
+            <p class="section-subtitle">Exclusive unreleased material</p>
+        </div>
+        <div class="dubs-intro fade-in">
+            <p>Get access to exclusive unreleased dubs, VIP mixes, stems, and special edits that you won't find anywhere else. These are the tracks I play in my sets before they hit the labels.</p>
+        </div>
+        <div class="dubs-grid">
+            <div class="dub-card fade-in">
+                <div class="dub-header">
+                    <span class="dub-badge monthly">Monthly</span>
+                    <h3 class="dub-title">Junglist</h3>
+                    <p class="dub-subtitle">For the dedicated selector</p>
+                </div>
+                <div class="dub-price"><span class="dub-price-amount">£9.99</span><span class="dub-price-period">/ month</span></div>
+                <ul class="dub-features">
+                    <li>2 exclusive dubs per month</li>
+                    <li>320kbps MP3 format</li>
+                    <li>Early access to releases</li>
+                    <li>Monthly newsletter</li>
+                    <li>Discord community access</li>
+                </ul>
+                <a href="#" class="dub-btn outline">Subscribe</a>
+            </div>
+            <div class="dub-card featured fade-in">
+                <div class="dub-header">
+                    <span class="dub-badge">Most Popular</span>
+                    <h3 class="dub-title">Selector</h3>
+                    <p class="dub-subtitle">For the serious DJ</p>
+                </div>
+                <div class="dub-price"><span class="dub-price-amount">£19.99</span><span class="dub-price-period">/ month</span></div>
+                <ul class="dub-features">
+                    <li>5 exclusive dubs per month</li>
+                    <li>WAV + MP3 formats</li>
+                    <li>Stems included</li>
+                    <li>VIP edits & remixes</li>
+                    <li>Early access to releases</li>
+                    <li>Discord community access</li>
+                    <li>Monthly production tips</li>
+                </ul>
+                <a href="#" class="dub-btn">Subscribe</a>
+            </div>
+            <div class="dub-card fade-in">
+                <div class="dub-header">
+                    <span class="dub-badge monthly">Monthly</span>
+                    <h3 class="dub-title">Architect</h3>
+                    <p class="dub-subtitle">For the producer</p>
+                </div>
+                <div class="dub-price"><span class="dub-price-amount">£34.99</span><span class="dub-price-period">/ month</span></div>
+                <ul class="dub-features">
+                    <li>All Selector tier benefits</li>
+                    <li>Full project files (Ableton)</li>
+                    <li>Sample packs from tracks</li>
+                    <li>1-on-1 feedback (monthly)</li>
+                    <li>Behind the scenes content</li>
+                    <li>Name in release credits</li>
+                </ul>
+                <a href="#" class="dub-btn outline">Subscribe</a>
+            </div>
+        </div>
+        <div class="dub-releases fade-in">
+            <div class="dub-releases-header"><h3 class="dub-releases-title">Or Buy Individual Dubs</h3></div>
+            <div class="dub-releases-grid">
+                <div class="dub-release-card fade-in">
+                    <div class="dub-release-artwork"><span class="dub-release-exclusive">Exclusive</span>🔊</div>
+                    <div class="dub-release-info">
+                        <h4 class="dub-release-title">Concrete Jungle VIP</h4>
+                        <p class="dub-release-meta">Unreleased • 2024</p>
+                        <div class="dub-release-price"><span>£4.99</span><a href="#" class="dub-release-buy">Buy</a></div>
+                    </div>
+                </div>
+                <div class="dub-release-card fade-in">
+                    <div class="dub-release-artwork"><span class="dub-release-exclusive">Exclusive</span>🔊</div>
+                    <div class="dub-release-info">
+                        <h4 class="dub-release-title">Amen Prophecy (Stems)</h4>
+                        <p class="dub-release-meta">Stems Pack • 2024</p>
+                        <div class="dub-release-price"><span>£7.99</span><a href="#" class="dub-release-buy">Buy</a></div>
+                    </div>
+                </div>
+                <div class="dub-release-card fade-in">
+                    <div class="dub-release-artwork"><span class="dub-release-exclusive">Exclusive</span>🔊</div>
+                    <div class="dub-release-info">
+                        <h4 class="dub-release-title">Warehouse Dub 001</h4>
+                        <p class="dub-release-meta">Unreleased • 2024</p>
+                        <div class="dub-release-price"><span>£3.99</span><a href="#" class="dub-release-buy">Buy</a></div>
+                    </div>
+                </div>
+                <div class="dub-release-card fade-in">
+                    <div class="dub-release-artwork"><span class="dub-release-exclusive">Exclusive</span>🔊</div>
+                    <div class="dub-release-info">
+                        <h4 class="dub-release-title">Rewind (DJ Edit)</h4>
+                        <p class="dub-release-meta">Special Edit • 2023</p>
+                        <div class="dub-release-price"><span>£2.99</span><a href="#" class="dub-release-buy">Buy</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SAMPLE PACKS -->
+    <section class="section page-section" id="samples" style="display: none;">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Sample Packs</h2>
+            <p class="section-subtitle">Tools for producers</p>
+        </div>
+        <div class="packs-grid">
+            <div class="pack-card fade-in">
+                <div class="pack-header">
+                    <span class="pack-badge">New</span>
+                    <h3 class="pack-title">Amen Warfare Vol.1</h3>
+                </div>
+                <p class="pack-desc">200+ meticulously chopped amen breaks, loops, and one-shots.</p>
+                <div class="pack-preview"><audio controls><source src="music/preview.mp3" type="audio/mpeg"></audio></div>
+                <ul class="pack-features">
+                    <li>200+ samples</li>
+                    <li>24-bit WAV format</li>
+                    <li>Organized by BPM</li>
+                    <li>100% royalty-free</li>
+                </ul>
+                <div class="pack-price">£29.99</div>
+                <a href="#" class="pack-btn">Download Now</a>
+            </div>
+            <div class="pack-card fade-in">
+                <div class="pack-header"><h3 class="pack-title">Bass Architecture</h3></div>
+                <p class="pack-desc">150+ reese basslines, sub-bass hits, and bass textures.</p>
+                <div class="pack-preview"><audio controls><source src="music/preview.mp3" type="audio/mpeg"></audio></div>
+                <ul class="pack-features">
+                    <li>150+ bass samples</li>
+                    <li>24-bit WAV format</li>
+                    <li>Serum presets included</li>
+                    <li>100% royalty-free</li>
+                </ul>
+                <div class="pack-price">£24.99</div>
+                <a href="#" class="pack-btn">Download Now</a>
+            </div>
+            <div class="pack-card fade-in">
+                <div class="pack-header"><h3 class="pack-title">Jungle Atmospheres</h3></div>
+                <p class="pack-desc">Cinematic pads, textures, and vocal chops.</p>
+                <div class="pack-preview"><audio controls><source src="music/preview.mp3" type="audio/mpeg"></audio></div>
+                <ul class="pack-features">
+                    <li>100+ atmospheric samples</li>
+                    <li>24-bit WAV format</li>
+                    <li>Key & BPM labeled</li>
+                    <li>100% royalty-free</li>
+                </ul>
+                <div class="pack-price">£19.99</div>
+                <a href="#" class="pack-btn">Download Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MERCH -->
+    <section class="section page-section" id="merch" style="display: none; background: var(--bg-secondary);">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Merch</h2>
+            <p class="section-subtitle">Wear the frequency</p>
+        </div>
+        <div class="music-grid">
+            <div class="release-card fade-in">
+                <div class="release-artwork" style="font-size: 2.5rem;">👕</div>
+                <div class="release-info">
+                    <h3 class="release-title">RMS Logo Tee</h3>
+                    <p class="release-meta">Premium cotton • S-3XL</p>
+                    <div class="release-platforms">
+                        <span class="price-tag">£25.00</span>
+                        <a href="#" class="platform-link">Buy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="release-card fade-in">
+                <div class="release-artwork" style="font-size: 2.5rem;">🧥</div>
+                <div class="release-info">
+                    <h3 class="release-title">Jungle Architect Hoodie</h3>
+                    <p class="release-meta">Limited edition • S-2XL</p>
+                    <div class="release-platforms">
+                        <span class="price-tag">£45.00</span>
+                        <a href="#" class="platform-link">Buy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="release-card fade-in">
+                <div class="release-artwork" style="font-size: 2.5rem;">🧢</div>
+                <div class="release-info">
+                    <h3 class="release-title">RMS Snapback</h3>
+                    <p class="release-meta">Embroidered • One size</p>
+                    <div class="release-platforms">
+                        <span class="price-tag">£20.00</span>
+                        <a href="#" class="platform-link">Buy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="release-card fade-in">
+                <div class="release-artwork" style="font-size: 2.5rem;">💿</div>
+                <div class="release-info">
+                    <h3 class="release-title">Concrete Jungle 12"</h3>
+                    <p class="release-meta">Limited vinyl • 180g</p>
+                    <div class="release-platforms">
+                        <span class="price-tag">£18.00</span>
+                        <a href="#" class="platform-link">Pre-Order</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MIXES -->
+    <section class="section page-section" id="mixes" style="display: none;">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Mixes & Radio</h2>
+            <p class="section-subtitle">Deep cuts and studio sessions</p>
+        </div>
+        <div class="gigs-list">
+            <div class="gig-card fade-in mix-card" data-mix-index="0">
+                <div class="gig-date"><div class="gig-day" style="font-size:1.3rem;">JAN</div><div class="gig-month">2024</div></div>
+                <div class="gig-details">
+                    <h3 class="gig-venue">RMS - Studio Mix 001</h3>
+                    <p class="gig-location">2 hours of unreleased dubs & classics</p>
+                </div>
+                <button class="gig-ticket play-btn play-mix-btn">▶ Play</button>
+            </div>
+            <div class="gig-card fade-in mix-card" data-mix-index="1">
+                <div class="gig-date"><div class="gig-day" style="font-size:1.3rem;">DEC</div><div class="gig-month">2023</div></div>
+                <div class="gig-details">
+                    <h3 class="gig-venue">Rinse FM Takeover</h3>
+                    <p class="gig-location">90 minutes for Rinse FM</p>
+                </div>
+                <button class="gig-ticket play-btn play-mix-btn">▶ Play</button>
+            </div>
+            <div class="gig-card fade-in mix-card" data-mix-index="2">
+                <div class="gig-date"><div class="gig-day" style="font-size:1.3rem;">NOV</div><div class="gig-month">2023</div></div>
+                <div class="gig-details">
+                    <h3 class="gig-venue">Fabric Live Recording</h3>
+                    <p class="gig-location">Recorded at Fabric Room 1</p>
+                </div>
+                <button class="gig-ticket play-btn play-mix-btn">▶ Play</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section page-section" id="about" style="display: none; background: var(--bg-secondary);">
+        <div class="section-header fade-in">
+            <h2 class="section-title">About</h2>
+            <p class="section-subtitle">The story behind the sound</p>
+        </div>
+        <div class="about-content">
+            <div class="about-image fade-in">
+                <img src="images/ProfilePicture.png" alt="RMS">
+            </div>
+            <div class="about-text">
+                <div class="about-bio fade-in">
+                    <p>RMS emerged from the underground of Canada's jungle scene, carving out a reputation for <strong>raw, uncompromising breaks</strong> and basslines that shake foundations.</p>
+                    <p>With roots in the golden era of 90s jungle but eyes firmly on the future, RMS blends classic amen breaks with modern production techniques to create something entirely unique.</p>
+                    <p>From packed warehouse raves to studio sessions that push sonic boundaries, the mission remains the same: to architect frequencies that move bodies and minds.</p>
+                    <a href="downloads/rms-press-kit.zip" download class="press-kit-btn">Download Press Kit</a>
+                </div>
+                <div class="about-stats fade-in">
+                    <div class="stat-item"><div class="stat-number">50+</div><div class="stat-label">Releases</div></div>
+                    <div class="stat-item"><div class="stat-number">100+</div><div class="stat-label">Live Shows</div></div>
+                    <div class="stat-item"><div class="stat-number">120k+</div><div class="stat-label">Monthly Listeners</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section page-section" id="contact" style="display: none;">
+        <div class="section-header fade-in">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Bookings, collabs, or just to say hi</p>
+        </div>
+        <div class="contact-container">
+            <form class="contact-form fade-in" id="contactForm">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-input" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" name="email" placeholder="rms.dnb@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Subject</label>
+                    <input type="text" class="form-input" name="subject" placeholder="What's this about?" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-textarea" name="message" placeholder="Your message..." required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Send Message</button>
+            </form>
+            <div class="contact-info fade-in">
+                <div class="info-item"><div class="info-label">Bookings</div><div class="info-value"><a href="mailto:rms.dnb@gmail.com">rms.dnb@gmail.com</a></div></div>
+                <div class="info-item"><div class="info-label">Press</div><div class="info-value"><a href="mailto:rms.dnb@gmail.com">rms.dnb@gmail.com</a></div></div>
+                <div class="info-item"><div class="info-label">General</div><div class="info-value"><a href="mailto:rms.dnb@gmail.com">rms.dnb@gmail.com</a></div></div>
+                <div class="info-item"><div class="info-label">Based In</div><div class="info-value">London, UK</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#home" class="footer-logo" id="footerLogo">RMS</a>
+            <div class="footer-social">
+                <a href="#">SC</a>
+                <a href="#">IG</a>
+                <a href="#">YT</a>
+                <a href="#">BC</a>
+                <a href="#">SP</a>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Licensing</a>
+            </div>
+            <p class="footer-copyright">© 2026 RMS. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- AUDIO PLAYER -->
+    <div class="audio-player" id="audioPlayer">
+        <div class="player-info">
+            <div class="player-artwork" id="playerArtwork">♫</div>
+            <div class="player-details">
+                <h4 id="playerTrackTitle">Select a track</h4>
+                <p id="playerAlbumTitle">RMS Music</p>
+            </div>
+        </div>
+        <div class="player-controls">
+            <button class="player-btn" id="prevBtn">⏮</button>
+            <button class="player-btn play" id="playBtn">▶</button>
+            <button class="player-btn" id="nextBtn">⏭</button>
+        </div>
+        <div class="player-progress-container">
+            <div class="player-progress" id="progressBar"><div class="player-progress-bar" id="progressFill"></div></div>
+            <div class="player-time"><span id="currentTime">0:00</span><span id="totalTime">0:00</span></div>
+        </div>
+        <div class="player-volume">
+            <span class="player-volume-icon" id="volumeIcon">🔊</span>
+            <div class="player-volume-slider" id="volumeSlider"><div class="player-volume-level" id="volumeLevel"></div></div>
+        </div>
+        <div class="player-extra">
+            <button class="player-extra-btn" id="shuffleBtn">🔀</button>
+            <button class="player-extra-btn" id="repeatBtn">🔁</button>
+        </div>
+    </div>
+
+    <script>
+        // PAGES
+        const pages = {
+            home: document.getElementById('home'),
+            music: document.getElementById('music'),
+            videos: document.getElementById('videos'),
+            gigs: document.getElementById('gigs'),
+            dubs: document.getElementById('dubs'),
+            samples: document.getElementById('samples'),
+            merch: document.getElementById('merch'),
+            mixes: document.getElementById('mixes'),
+            about: document.getElementById('about'),
+            contact: document.getElementById('contact')
+        };
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page-section').forEach(s => s.style.display = 'none');
+            if (pageName === 'home') {
+                pages.home.style.display = 'flex';
+            } else {
+                pages.home.style.display = 'none';
+                if (pages[pageName]) {
+                    pages[pageName].style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setTimeout(() => {
+                        pages[pageName].querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+                    }, 100);
+                }
+            }
+        }
+
+        // NAV TOGGLE
+        const navToggle = document.getElementById('navToggle');
+        const navOverlay = document.getElementById('navOverlay');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : '';
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                navToggle.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                showPage(link.dataset.page);
+                window.location.hash = link.dataset.page;
+            });
+        });
+
+        document.querySelector('.hero-cta').addEventListener('click', e => {
+            e.preventDefault();
+            showPage(e.target.dataset.page);
+            window.location.hash = e.target.dataset.page;
+        });
+
+        document.getElementById('logoLink').addEventListener('click', e => { e.preventDefault(); showPage('home'); window.location.hash = 'home'; });
+        document.getElementById('footerLogo').addEventListener('click', e => { e.preventDefault(); showPage('home'); window.location.hash = 'home'; });
+
+        window.addEventListener('hashchange', () => showPage(window.location.hash.substring(1) || 'home'));
+        showPage(window.location.hash.substring(1) || 'home');
+
+        // AUDIO PLAYER
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const playerTrackTitle = document.getElementById('playerTrackTitle');
+        const playerAlbumTitle = document.getElementById('playerAlbumTitle');
+        const playerArtwork = document.getElementById('playerArtwork');
+        const currentTimeEl = document.getElementById('currentTime');
+        const totalTimeEl = document.getElementById('totalTime');
+        const volumeIcon = document.getElementById('volumeIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeLevel = document.getElementById('volumeLevel');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const repeatBtn = document.getElementById('repeatBtn');
+
+        let isPlaying = false, volume = 70, isMuted = false, isShuffled = false, isRepeating = false, currentTrackIndex = 0;
+
+        const tracks = [
+            { title: 'Concrete Jungle', album: 'Concrete Jungle EP', file: 'music/concrete-jungle.mp3' },
+            { title: 'Urban Warfare', album: 'Single', file: 'music/urban-warfare.mp3' },
+            { title: 'Breakpoint', album: 'Breakpoint Album', file: 'music/breakpoint.mp3' },
+            { title: 'Amen Prophecy', album: 'Single', file: 'music/amen-prophecy.mp3' },
+            { title: 'Bass Culture', album: 'Bass Culture EP', file: 'music/bass-culture.mp3' },
+            { title: 'Rewind Selector', album: 'Single', file: 'music/rewind-selector.mp3' }
+        ];
+
+        const mixes = [
+            { title: 'Studio Mix 001', album: 'Studio Sessions', file: 'mixes/studio-mix-001.mp3' },
+            { title: 'Rinse FM Takeover', album: 'Radio', file: 'mixes/rinse-fm.mp3' },
+            { title: 'Fabric Live', album: 'Live Sets', file: 'mixes/fabric-live.mp3' }
+        ];
+
+        const audio = new Audio();
+        audio.volume = volume / 100;
+
+        const formatTime = s => isNaN(s) ? '0:00' : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+
+        function updatePlayerUI() {
+            const t = tracks[currentTrackIndex];
+            if (t) { playerTrackTitle.textContent = t.title; playerAlbumTitle.textContent = t.album; }
+        }
+
+        function loadTrack(i) {
+            if (i < 0 || i >= tracks.length) return;
+            currentTrackIndex = i;
+            audio.src = tracks[i].file;
+            audio.load();
+            updatePlayerUI();
+            progressFill.style.width = '0%';
+            currentTimeEl.textContent = '0:00';
+        }
+
+        function playTrack() { audio.play().catch(()=>{}); isPlaying = true; playBtn.textContent = '⏸'; playBtn.classList.add('playing'); }
+        function pauseTrack() { audio.pause(); isPlaying = false; playBtn.textContent = '▶'; playBtn.classList.remove('playing'); }
+        function togglePlay() { isPlaying ? pauseTrack() : playTrack(); }
+        function nextTrack() { loadTrack(isShuffled ? Math.floor(Math.random()*tracks.length) : (currentTrackIndex+1)%tracks.length); playTrack(); }
+        function prevTrack() { loadTrack((currentTrackIndex-1+tracks.length)%tracks.length); playTrack(); }
+        function setVolume(v) { volume = Math.max(0,Math.min(100,v)); audio.volume = volume/100; volumeLevel.style.width = volume+'%'; volumeIcon.textContent = volume===0?'🔇':volume<50?'🔉':'🔊'; }
+        function toggleMute() { isMuted ? setVolume(70) : setVolume(0); isMuted = !isMuted; }
+
+        audio.addEventListener('timeupdate', () => { if(audio.duration) { progressFill.style.width = (audio.currentTime/audio.duration*100)+'%'; currentTimeEl.textContent = formatTime(audio.currentTime); }});
+        audio.addEventListener('loadedmetadata', () => totalTimeEl.textContent = formatTime(audio.duration));
+        audio.addEventListener('ended', () => isRepeating ? (audio.currentTime=0, playTrack()) : nextTrack());
+
+        playBtn.addEventListener('click', togglePlay);
+        prevBtn.addEventListener('click', prevTrack);
+        nextBtn.addEventListener('click', nextTrack);
+        progressBar.addEventListener('click', e => { audio.currentTime = ((e.clientX - progressBar.getBoundingClientRect().left) / progressBar.offsetWidth) * audio.duration; });
+        volumeIcon.addEventListener('click', toggleMute);
+        volumeSlider.addEventListener('click', e => setVolume(((e.clientX - volumeSlider.getBoundingClientRect().left) / volumeSlider.offsetWidth) * 100));
+        shuffleBtn.addEventListener('click', () => { isShuffled = !isShuffled; shuffleBtn.classList.toggle('active', isShuffled); });
+        repeatBtn.addEventListener('click', () => { isRepeating = !isRepeating; repeatBtn.classList.toggle('active', isRepeating); });
+
+        document.querySelectorAll('.release-card').forEach(c => {
+            c.addEventListener('click', e => {
+                if (e.target.classList.contains('platform-link')) return;
+                const i = parseInt(c.dataset.trackIndex);
+                if (!isNaN(i) && i < tracks.length) { loadTrack(i); playTrack(); }
+            });
+        });
+
+        document.querySelectorAll('.play-mix-btn').forEach((b,i) => {
+            b.addEventListener('click', () => {
+                if (i < mixes.length) {
+                    audio.src = mixes[i].file; audio.load();
+                    playerTrackTitle.textContent = mixes[i].title;
+                    playerAlbumTitle.textContent = mixes[i].album;
+                    playerArtwork.innerHTML = '🎧';
+                    playTrack();
+                }
+            });
+        });
+
+        if (tracks.length) loadTrack(0);
+
+        // HERO CANVAS
+        const canvas = document.getElementById('heroCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [], mouseX = 0, mouseY = 0;
+
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.2 + 0.3;
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+                this.opacity = Math.random() * 0.3 + 0.1;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                const dx = mouseX - this.x, dy = mouseY - this.y, d = Math.sqrt(dx*dx+dy*dy);
+                if (d < 100) { this.x -= dx * 0.005; this.y -= dy * 0.005; }
+                if (this.x < 0) this.x = canvas.width; if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height; if (this.y > canvas.height) this.y = 0;
+            }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${this.opacity})`; ctx.fill(); }
+        }
+
+        function initParticles() { particles = []; for (let i = 0; i < Math.min(80, canvas.width*canvas.height/18000); i++) particles.push(new Particle()); }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i+1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y, d = Math.sqrt(dx*dx+dy*dy);
+                    if (d < 70) { ctx.beginPath(); ctx.strokeStyle = `rgba(255,255,255,${(1-d/70)*0.1})`; ctx.lineWidth = 0.4; ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); }
+                }
+            }
+        }
+
+        function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); connectParticles(); requestAnimationFrame(animate); }
+
+        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+        document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+        resizeCanvas(); initParticles(); animate();
+
+        // SCROLL ANIMATIONS
+        const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // CONTACT FORM
+        document.getElementById('contactForm').addEventListener('submit', e => { e.preventDefault(); alert('Message sent! Thanks.'); e.target.reset(); });
+
+        console.log('%cRMS', 'color:#fff;font-size:50px;font-weight:900;');
+    </script>
+
+</body>
+</html>
